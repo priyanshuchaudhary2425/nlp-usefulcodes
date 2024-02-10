@@ -1,4 +1,4 @@
-# This code is for refrence purpose only dont just copy and paste!!!
+# This code is for token classification this is for refrence dont just copy and paste!!
 
 def align_labels_with_tokens(labels, word_ids):
     new_labels = []
@@ -43,6 +43,27 @@ def tokenize_and_align_labels(examples):
 
 tokenized_datasets = raw_datasets.map(
     tokenize_and_align_labels,
+    batched=True,
+    remove_columns=raw_datasets["train"].column_names,
+)
+
+
+
+
+# Use this if you are working with SequenceClassification This is for refrence dont just copy and paste!
+
+def tokenize_data(examples):
+    # Tokenize the text
+    tokenized_inputs = tokenizer(examples["text"], truncation=True, padding=True)
+
+    # Extract the labels
+    labels = examples["label"]
+
+    return {"input_ids": tokenized_inputs["input_ids"], "attention_mask": tokenized_inputs["attention_mask"], "labels": labels}
+
+# Tokenize the datasets
+tokenized_datasets = raw_datasets.map(
+    tokenize_data,
     batched=True,
     remove_columns=raw_datasets["train"].column_names,
 )

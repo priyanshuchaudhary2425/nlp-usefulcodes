@@ -1,3 +1,5 @@
+# This is workable for token classification
+
 import numpy as np
 
 
@@ -18,3 +20,36 @@ def compute_metrics(eval_preds):
         "f1": all_metrics["overall_f1"],
         "accuracy": all_metrics["overall_accuracy"],
     }
+
+
+
+# General purpose evaluation function
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+def evaluate_classification(predictions, labels):
+    """
+    Evaluate classification predictions using accuracy, precision, recall, and F1 score.
+    
+    Args:
+        predictions (list): Predicted labels.
+        labels (list): True labels.
+    
+    Returns:
+        dict: Dictionary containing accuracy, precision, recall, and F1 score.
+    """
+    # Calculate accuracy, precision, recall, and F1 score
+    accuracy = accuracy_score(labels, predictions)
+    precision = precision_score(labels, predictions)
+    recall = recall_score(labels, predictions)
+    f1 = f1_score(labels, predictions)
+    
+    # Return results as a dictionary
+    return {"accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
+
+# Example usage:
+# Assuming 'predictions' and 'labels' are your predicted and true labels
+evaluation_results = evaluate_classification(predictions, labels)
+print("Evaluation results:", evaluation_results)
+
+
+# 
